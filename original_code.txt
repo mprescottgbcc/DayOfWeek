@@ -1,0 +1,110 @@
+/*dayweek.cpp*/
+//This program calculates the day of the week for any date later than 1 AD
+//Written by Scott Hewitt on February 9, 2001
+//Converted to C++ by Meg Prescott on November 3, 2014
+
+
+#include <iostream>
+using namespace std;
+
+void julian(int,int,int,int);
+void gregorian(int,int,int,int);
+void err();
+
+int a,month,y,m,d,day,year;
+
+int main()
+{
+	cout << "\n\n\nThis program calculates the day of the week for any date later than 1 AD";
+	cout << "\n\n\n\nEnter the month as a number from 1 through 12. ==> ";
+	cin >>month;
+	cout << "\n\n\nEnter the day of the month as a number from 1 through 31. ==> ";
+	cin >> day;
+	cout<< "\n\n\nEnter the year ==> ";
+	cin >>year;
+	cout << endl << endl << endl;
+	
+	a=(14-month)/12;
+	y=year-a;
+	m=month+12*a-2;
+	if(year<1582)
+	  {julian(y,m,d,day);}
+	if(year>1582)
+	  {gregorian(y,m,d,day);}
+	if((year==1582)&&(month>10))
+	  {gregorian(y,m,d,day);}
+	if((year==1582)&&(month<10))
+	  {julian(y,m,d,day);}
+	if((year==1582)&&(month==10)&&(day<=4))
+	  {julian(y,m,d,day);}
+	if((year==1582)&&(month==10)&&(day>=15))
+	  {gregorian(y,m,d,day);}
+	if((year==1582)&&(month==10)&&(day<=14)&&(day>=5))
+	  {err();}
+
+	cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
+
+	return 0;
+}//end of main
+
+//---------------------------------------------------------------------------
+
+void julian(int y,int m,int d,int day)
+{
+ d=(5+day+y+(y/4)+(31*m/12))%7;
+
+ switch(d)
+  {case(0):{ cout << "This date falls on a Sunday!!";
+   break;}
+   case(1):{ cout << "This date falls on a Monday!!";
+   break;}
+   case(2):{ cout << "This date falls on a Tuesday!!";
+   break;}
+   case(3):{ cout << "This date falls on a Wednesday!!";
+   break;}
+   case(4):{ cout << "This date falls on a Thursday!!";
+   break;}
+   case(5):{ cout << "This date falls on a Friday!!";
+   break;}
+   case(6):{ cout << "This date falls on a Saturday!!";
+   break;}
+   default:{ cout << "There has been an error\n!!";
+   break;}
+  }
+
+ }
+//---------------------------------------------------------------------------
+
+void gregorian(int y,int m,int d,int day)
+ {
+ d=(day+y+(y/4)-(y/100)+(y/400)+(31*m/12))%7;
+
+ switch(d)
+  {case(0):{ cout << "This date falls on a Sunday!!";
+   break;}
+   case(1):{ cout << "This date falls on a Monday!!";
+   break;}
+   case(2):{ cout << "This date falls on a Tuesday!!";
+   break;}
+   case(3):{ cout << "This date falls on a Wednesday!!";
+   break;}
+   case(4):{ cout << "This date falls on a Thursday!!";
+   break;}
+   case(5):{ cout << "This date falls on a Friday!!";
+   break;}
+   case(6):{ cout << "This date falls on a Saturday!!";
+   break;}
+   default:{ cout << "There has been an error\n!!";
+   break;}
+  }
+ }
+//---------------------------------------------------------------------------
+void err()
+ {
+  cout << "\nDates between October 5, 1582 and October 14, 1582 inclusive\n";
+  cout << "do not exist.These 10 days were dropped as conversion was made\n";
+  cout << "from the Julian Calendar to the Gregorian Calendar which is still\n";
+  cout << "in use today.\n";
+ }
+
+//---------------------------------------------------------------------------
